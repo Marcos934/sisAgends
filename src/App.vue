@@ -1,13 +1,16 @@
 <template>
-  <h1>Iniciando o Projeto</h1>
+  <Layout>Iniciando o Projeto</Layout>
  
 </template>
 
 <script>
 
+import Layout from "@/layouts/Layout"
 
 export default {
-
+components:{
+  Layout,
+}
  
 }
 </script>
