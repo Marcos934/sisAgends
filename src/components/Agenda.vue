@@ -12,15 +12,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Tiger Nixon</td>
-            <td>System Architect</td>
-            <td>Edinburgh</td>
-            <td>61</td>
-            <td>2011/04/25</td>
-           </tr>
-      
+          <tr v-for="dado in dados" :key="dado.id">
+            <td>{{ dado.nome }}</td>
+            <td>{{ dado.telefone }}</td>
+            <td>{{ dado.email }}</td>
+            <td>{{ dado.sexo }}</td>
+            <td>Ação</td>
+          </tr>
         </tbody>
+
         <tfoot>
           <tr>
             <th>Nome</th>
@@ -36,10 +36,17 @@
 </template>
 
 <script>
-
 export default {
+  props: {
+    dados: Object,
+  },
+  data() {
+    return {
+      index: null,
+    };
+  },
+  methods: {},
 };
-
 </script>
 <style scoped>
 </style>
