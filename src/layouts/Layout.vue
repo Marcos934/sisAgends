@@ -14,13 +14,13 @@
    
 
   </nav>
-
-  <section class="hero is-small">
-    <div class="hero-body">
-      <div class="container">
+ <div class="hero-body">
+      <div class="container is-max-widescreen">
         <slot> </slot>
       </div>
     </div>
+  <section class="hero is-small">
+   
     <footer class="footer hero is-medium is-link">
       <div class="content has-text-centered">
         <p>

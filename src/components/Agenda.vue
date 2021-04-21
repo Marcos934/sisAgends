@@ -18,13 +18,13 @@
             <td>{{ dado.email }}</td>
             <td>{{ dado.sexo }}</td>
             <td>
-              <button class="button is-small is-warning mr-2">
+              <button
+                @click="editar(dado)"
+                class="button is-small is-warning mr-2"
+              >
                 <strong>Editar</strong>
               </button>
-              <button
-                @click="excluir(dado.id)"
-                class="button is-small is-danger"
-              >
+              <button @click="excluir(dado)" class="button is-small is-danger">
                 <strong>Excluir</strong>
               </button>
             </td>
@@ -43,24 +43,37 @@
       </table>
     </div>
   </div>
+<div v-if="visivel">
+  <Modal @fecharComponente="modalEvento" />
+</div>
 </template>
 
 <script>
 const axios = require("axios");
+import Modal from "@/components/Modal";
 export default {
+  components: {
+    Modal,
+  },
   props: {
     dados: Object,
   },
   data() {
     return {
+      visivel: false,
       index: null,
     };
   },
   methods: {
     excluir(valor) {
+      if (
+        !confirm("Deseja realemente excluir o contato de: " + valor.nome + " ?")
+      ) {
+        return 0;
+      }
       axios
         .delete("http://localhost:8080/api/deletar", {
-          data: { id: valor },
+          data: { id: valor.id },
         })
 
         .then((res) => {
@@ -71,6 +84,15 @@ export default {
           console.log(err.response);
         });
     },
+    editar(valor) {
+      this.modalEvento()
+      console.log(this.visivel)
+      console.log(valor);
+    },
+    modalEvento(){
+        this.visivel = !this.visivel;
+    }
+    ,
     atualizaRequest() {
       this.$emit("atualiza");
     },

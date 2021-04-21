@@ -1,20 +1,20 @@
 <template>
   <Layout>
-    <ModalAddContato @atualiza="atualiza" />
-    <Agenda :dados="dados"  @atualiza="atualiza" />
+    <ModalContato @atualiza="atualizar" />
+    <Agenda :dados="dados"  @atualiza="atualizar" />
   </Layout>
 </template>
 
 <script>
 import Layout from "@/layouts/Layout";
 import Agenda from "@/components/Agenda";
-import ModalAddContato from "@/components/ModalAddContato";
+import ModalContato from "@/components/ModalContato";
 const axios = require("axios");
 export default {
   components: {
     Layout,
     Agenda,
-    ModalAddContato,
+    ModalContato,
   },
   data() {
     return {
@@ -22,7 +22,7 @@ export default {
     };
   },
   methods: {
-    atualiza() {
+    atualizar() {
       axios
         .get("http://localhost:8080/api/contatos", {})
         .then((res) => {
