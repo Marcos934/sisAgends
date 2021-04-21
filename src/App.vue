@@ -1,10 +1,10 @@
 <template>
   <Layout>
     <template #botaoModalContato>
-      <ModalContato @atualiza="atualizar" />
+      <ModalContato @atualiza="ref" />
     </template>
     <template #tabelaAgenda>
-      <Agenda :dados="dados" @atualiza="atualizar" />
+      <Agenda :dados="dados" @atualiza="ref" />
     </template>
   </Layout>
 </template>
@@ -26,19 +26,27 @@ export default {
     };
   },
   methods: {
-    atualizar() {
-      axios
+    async atualizar() {
+      await axios
         .get("http://localhost:8080/api/contatos", {})
         .then((res) => {
           this.dados = res.data;
           //  console.log(this.dados);
         })
         .catch((err) => {
-          console.log(err.response);
+          alert(
+            "Verifique se API minha agenda está em execução na porta 8080: " +
+              err
+          );
         });
+     
     },
+    ref(){
+     location.reload();
+    }
   },
-  mounted() {
+
+  created() {
     this.atualizar();
   },
 };

@@ -1,11 +1,11 @@
 <template>
-    <!-- is-active -->
+  <!-- is-active -->
   <!-- is-clipped -->
   <div v-if="visivel == true" class="modal is-active">
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title" >Editando: {{nome}} </p>
+        <p class="modal-card-title">Editando: {{ nome }}</p>
         <button class="delete" @click="modal"></button>
       </header>
 
@@ -62,14 +62,17 @@
               <select required v-model="form.sexo">
                 <option selected disabled>Selecione</option>
                 <option value="M">M - (Masculino)</option>
-                <option value="F">F - (Femenino)</option>
+                <option value="F">F - (Feminino)</option>
               </select>
             </div>
           </div>
         </form>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success" @click="salvarContato">
+        <button v-if="load" class="button is-success is-loading">
+          Aguarde
+        </button>
+        <button v-else class="button is-success" @click="salvarContato">
           Salvar Contato
         </button>
         <button class="button" @click="modal">Cancelar</button>
@@ -81,14 +84,15 @@
 <script>
 const axios = require("axios");
 export default {
-    props:{
-         ativo: Boolean,
-         editarDados: Object
-    },
+  props: {
+    ativo: Boolean,
+    editarDados: Object,
+  },
   data() {
     return {
       errors: [],
       visivel: true,
+      load: false,
       nome: this.editarDados.nome,
       form: {
         id: this.editarDados.id,
@@ -101,14 +105,15 @@ export default {
   },
   methods: {
     modal() {
-      this.$emit("fecharComponente")
+      this.$emit("fecharComponente");
     },
-    salvarContato() {
+    async salvarContato() {
+       this.load = true
       this.errors = [];
       if (this.checkForm()) {
         alert("Preencha todos os campos corretamente");
       } else {
-        axios
+        await axios
           .put("http://localhost:8080/api/editar", this.form)
           .then((res) => {
             this.limpaValores();
@@ -121,6 +126,7 @@ export default {
             console.log(err.response);
           });
       }
+       this.load = false
     },
     atualizaRequest() {
       this.$emit("atualiza");

@@ -85,14 +85,19 @@
               <select required v-model="form.sexo">
                 <option selected disabled>Selecione</option>
                 <option value="M">M - (Masculino)</option>
-                <option value="F">F - (Femenino)</option>
+                <option value="F">F - (Feminino)</option>
               </select>
             </div>
           </div>
         </form>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success" @click="salvarContato">
+        <button v-if="load" class="button is-success is-loading">Aguarde</button>
+        <button
+          v-else
+          class="button is-success"
+          @click="salvarContato"
+        >
           Salvar Contato
         </button>
         <button class="button" @click="modal">Cancelar</button>
@@ -110,6 +115,7 @@ export default {
     return {
       errors: [],
       visivel: false,
+      load: false,
       form: {
         nome: "",
         sexo: "",
@@ -122,12 +128,13 @@ export default {
     modal() {
       this.visivel = !this.visivel;
     },
-    salvarContato() {
+   async salvarContato() {
+     this.load = true
       this.errors = [];
       if (this.checkForm()) {
         alert("Preencha todos os campos corretamente");
       } else {
-        axios
+       await axios
           .post("http://localhost:8080/api/novo", this.form)
           .then((res) => {
             this.limpaValores();
@@ -137,9 +144,10 @@ export default {
             console.log(res.status);
           })
           .catch((err) => {
-            console.log(err.response);
+           alert(err);
           });
       }
+       this.load = false
     },
     atualizaRequest() {
       this.$emit("atualiza");

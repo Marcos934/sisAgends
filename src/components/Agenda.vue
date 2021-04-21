@@ -1,7 +1,7 @@
 <template >
   <div class="container">
     <div class="notification is-white">
-      <table id="example" class="display" style="width: 100%">
+      <table id="tabela" class=" table display" style="width: 100%">
         <thead>
           <tr>
             <th>Nome</th>
@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="dado in dados" :key="dado.id">
+          <tr class="mt-5" v-for="dado in dados" :key="dado.id">
             <td>{{ dado.nome }}</td>
             <td>{{ dado.telefone }}</td>
             <td>{{ dado.email }}</td>
@@ -67,13 +67,13 @@ export default {
     };
   },
   methods: {
-    excluir(valor) {
+   async  excluir(valor) {
       if (
         !confirm("Deseja realemente excluir o contato de: " + valor.nome + " ?")
       ) {
         return 0;
       }
-      axios
+   await axios
         .delete("http://localhost:8080/api/deletar", {
           data: { id: valor.id },
         })
@@ -85,6 +85,7 @@ export default {
         .catch((err) => {
           console.log(err.response);
         });
+        this.atualizaRequest()
     },
     editar(valor) {
       this.modalEvento()
