@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <ModalAddContato @atualiza="atualiza" />
-    <Agenda :dados="dados"  />
+    <Agenda :dados="dados"  @atualiza="atualiza" />
   </Layout>
 </template>
 
