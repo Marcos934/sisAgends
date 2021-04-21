@@ -1,4 +1,4 @@
-<template>
+<template >
   <div class="container">
     <div class="notification is-white">
       <table id="example" class="display" style="width: 100%">
@@ -44,7 +44,7 @@
     </div>
   </div>
 <div v-if="visivel">
-  <Modal @fecharComponente="modalEvento" />
+  <Modal :editarDados="editarDados" @fecharComponente="modalEvento" @atualiza="atualizaRequest" />
 </div>
 </template>
 
@@ -62,6 +62,8 @@ export default {
     return {
       visivel: false,
       index: null,
+      editarDados: '',
+
     };
   },
   methods: {
@@ -86,8 +88,7 @@ export default {
     },
     editar(valor) {
       this.modalEvento()
-      console.log(this.visivel)
-      console.log(valor);
+      this.editarDados = valor
     },
     modalEvento(){
         this.visivel = !this.visivel;

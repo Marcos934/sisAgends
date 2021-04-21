@@ -10,17 +10,16 @@
         <p class="subtitle">Agenda de contatos</p>
       </div>
     </section>
-
-   
-
+    
   </nav>
- <div class="hero-body">
-      <div class="container is-max-widescreen">
-        <slot> </slot>
-      </div>
+  <slot name="botaoModalContato"></slot>
+
+  <div class="hero-body">
+    <div class="container is-max-widescreen">
+      <slot name="tabelaAgenda"> </slot>
     </div>
+  </div>
   <section class="hero is-small">
-   
     <footer class="footer hero is-medium is-link">
       <div class="content has-text-centered">
         <p>
@@ -36,7 +35,6 @@
   </section>
 </template>
 <script>
-
 export default {};
 </script>
 

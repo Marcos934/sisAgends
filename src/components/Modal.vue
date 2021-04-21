@@ -5,7 +5,7 @@
     <div class="modal-background"></div>
     <div class="modal-card">
       <header class="modal-card-head">
-        <p class="modal-card-title">Adicionar novo contato</p>
+        <p class="modal-card-title" >Editando: {{nome}} </p>
         <button class="delete" @click="modal"></button>
       </header>
 
@@ -83,16 +83,19 @@ const axios = require("axios");
 export default {
     props:{
          ativo: Boolean,
+         editarDados: Object
     },
   data() {
     return {
       errors: [],
       visivel: true,
+      nome: this.editarDados.nome,
       form: {
-        nome: "",
-        sexo: "",
-        telefone: "",
-        email: "",
+        id: this.editarDados.id,
+        nome: this.editarDados.nome,
+        sexo: this.editarDados.sexo,
+        telefone: this.editarDados.telefone,
+        email: this.editarDados.email,
       },
     };
   },
@@ -106,7 +109,7 @@ export default {
         alert("Preencha todos os campos corretamente");
       } else {
         axios
-          .post("http://localhost:8080/api/novo", this.form)
+          .put("http://localhost:8080/api/editar", this.form)
           .then((res) => {
             this.limpaValores();
             this.atualizaRequest();

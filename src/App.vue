@@ -1,7 +1,11 @@
 <template>
   <Layout>
-    <ModalContato @atualiza="atualizar" />
-    <Agenda :dados="dados"  @atualiza="atualizar" />
+    <template #botaoModalContato>
+      <ModalContato @atualiza="atualizar" />
+    </template>
+    <template #tabelaAgenda>
+      <Agenda :dados="dados" @atualiza="atualizar" />
+    </template>
   </Layout>
 </template>
 
@@ -18,7 +22,7 @@ export default {
   },
   data() {
     return {
-      dados: "",
+      dados: null,
     };
   },
   methods: {
@@ -27,7 +31,7 @@ export default {
         .get("http://localhost:8080/api/contatos", {})
         .then((res) => {
           this.dados = res.data;
-        //  console.log(this.dados);
+          //  console.log(this.dados);
         })
         .catch((err) => {
           console.log(err.response);
@@ -35,15 +39,7 @@ export default {
     },
   },
   mounted() {
-    axios
-      .get("http://localhost:8080/api/contatos", {})
-      .then((res) => {
-        this.dados = res.data;
-       // console.log(this.dados);
-      })
-      .catch((err) => {
-        console.log(err.response);
-      });
+    this.atualizar();
   },
 };
 </script>
