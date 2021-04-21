@@ -42,6 +42,7 @@ export default {
      
     },
     ref(){
+      //hook de atualização para datatables a nível de html.
      location.reload();
     }
   },
